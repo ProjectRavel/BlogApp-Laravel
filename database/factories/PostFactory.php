@@ -2,7 +2,8 @@
 
     namespace Database\Factories;
 
-    use App\Models\User;
+use App\Models\Category;
+use App\Models\User;
     use Illuminate\Support\Str;
     use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,10 +19,12 @@
          */
         public function definition(): array
         {
+            $title = fake()->sentence();
             return [
-                'slug' => Str::slug(fake()->sentence()),
-                'title' => fake()->sentence(),
+                'slug' => Str::slug($title),
+                'title' => $title,
                 'author_id' => User::factory(),
+                'category_id' => Category::factory(),
                 'body' => fake()->text()
             ];
         }
