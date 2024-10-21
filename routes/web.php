@@ -21,17 +21,17 @@ Route::get('/about', function () {
 
 Route::get('/posts', function () {
 
-    // $posts = Post::with(['author', 'category'])->get();
+    $posts = Post::filter(request(['search', 'category']))->get();
 
-    return view('posts', ['title' => 'Blog', 'posts' => Post::all()]);
+    return view('posts', ['title' => 'Blog Posts: ' . count($posts) . ' Data.', 'posts' => $posts]);
 });
 
 Route::get('/posts/{post:slug}', function (Post $post) {
-    return view('post', ['title' => 'Single Post', 'post' => $post]);
+    return view('post', ['title' => 'Single Post', 'post' => $post->get()]);
 });
 
 Route::get('/authors/{user:username}', function (User $user) {
-    
+
     // $posts = $user->posts->load('category', 'author');  
 
     return view('posts', ['title' => count($user->posts) . ' Article by ' . $user->name, 'posts' => $user->posts]);
