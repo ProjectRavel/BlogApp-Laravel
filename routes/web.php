@@ -21,13 +21,13 @@ Route::get('/about', function () {
 
 Route::get('/posts', function () {
 
-    $posts = Post::filter(request(['search', 'category']))->get();
+    $posts = Post::filter(request(['search', 'category', 'authors']))->paginate(10)->withQueryString();
 
     return view('posts', ['title' => 'Blog Posts: ' . count($posts) . ' Data.', 'posts' => $posts]);
 });
 
 Route::get('/posts/{post:slug}', function (Post $post) {
-    return view('post', ['title' => 'Single Post', 'post' => $post->get()]);
+    return view('post', ['title' => 'Single Post', 'post' => $post]);   
 });
 
 Route::get('/authors/{user:username}', function (User $user) {

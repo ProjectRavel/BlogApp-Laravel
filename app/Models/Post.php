@@ -24,9 +24,11 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function scopeFilter(Builder $query, array $filters) : void
+    public function scopeFilter(Builder $query, array $filters): void
     {
-        $query->when(isset($filters['search']) ? $filters['search'] : false, fn($query, $search)=>
+        $query->when(
+            isset($filters['search']) ? $filters['search'] : false,
+            fn($query, $search) =>
             $query->where('title', 'LIKE', '%' . request('search') . '%')
         );
 
@@ -34,6 +36,12 @@ class Post extends Model
             isset($filters['category']) ? $filters['category'] : false,
             fn($query, $category) =>
             $query->whereHas('category', fn($query) => $query->where('slug', $category))
-        );  
+        );
+
+        $query->when(
+            isset($filters['authors']) ? $filters['authors'] : false,
+            fn($query, $authors) =>
+            $query->whereHas('author', fn($query) => $query->where('username', $authors))
+        );
     }
 }
