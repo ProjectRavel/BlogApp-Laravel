@@ -5,7 +5,7 @@ This is a simple blog application built using **Laravel**, as part of learning t
 
 ## Preview
 
-![Alt text for image](./assets/web-screenshoot.png)
+![Preview](./assets/web-screenshoot.png)
 
 ## Features
 
